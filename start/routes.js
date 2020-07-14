@@ -9,4 +9,10 @@ Route.post('passwords', 'ForgotPasswordController.store')
 Route.put('passwords', 'ForgotPasswordController.update')
 
 Route.get('/files/:id', 'FileController.show')
-Route.post('files', 'FileController.store')
+
+// Restringir acessso para usuários logados
+Route.group(() => {
+  Route.post('files', 'FileController.store')
+  // Cria todas as rotas disponíveis
+  Route.resource('projects', 'ProjectController').apiOnly()
+}).middleware(['auth'])
