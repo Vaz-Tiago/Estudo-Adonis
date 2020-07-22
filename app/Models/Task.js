@@ -1,9 +1,18 @@
 'use strict'
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
 class Task extends Model {
+  // Constructor
+  static boot () {
+    super.boot()
+
+    // -> Chama o hook depois de alterar a tabela.
+    // -> Que por usa vez chama o hook.Metodo que criamos
+    this.addHook('afterCreate', 'TaskHook.sendNewTaskMail')
+    this.addHook('beforeUpdate', 'TaskHook.sendNewTaskMail')
+  }
+
   // Pertence a um projeto
   project () {
     return this.belongsTo('App/Models/Project')
