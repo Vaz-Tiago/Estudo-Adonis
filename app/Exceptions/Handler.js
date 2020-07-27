@@ -1,4 +1,7 @@
 'use strict'
+// Somente em produção
+// const Sentry = require('@sentry/node')
+// const Config = use('Config')
 
 const Env = use('Env')
 const Youch = use('youch')
@@ -21,6 +24,8 @@ class ExceptionHandler extends BaseExceptionHandler {
 
   async report (error, { request }) {
     console.log(error)
+    // Sentry.init({ dsn: Config.get('services.sentry.dsn') })
+    // Sentry.captureException(error)
   }
 }
 
